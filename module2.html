@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lingo Master – Course & Lesson Management</title>
+  <style>
+    :root {
+      --primary: #1e90ff;
+      --primary-dark: #1c7ed6;
+      --accent: #4CAF50;
+      --bg: #f5f7fa;
+      --text: #2c3e50;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: var(--primary-dark);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 15px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    nav button:hover,
+    nav button.active-tab {
+      background-color: #145ba0;
+    }
+
+    .section {
+      display: none;
+      padding: 30px;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 12px;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #3a9d45;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    hr {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Lingo Master – Course & Lesson Management</header>
+
+  <nav>
+    <button onclick="showSection('browse')" class="active-tab">Browse Courses</button>
+    <button onclick="showSection('enroll')">Enroll</button>
+    <button onclick="showSection('lessons')">View Lessons</button>
+    <button onclick="showSection('start')">Start Lesson</button>
+    <button onclick="showSection('complete')">Mark Complete</button>
+  </nav>
+
+  <!-- Section: Browse Available Courses -->
+  <div id="browse" class="section active">
+    <h2>Browse Available Courses</h2>
+    <div>
+      <p><strong>Spanish Basics</strong> – Beginner</p>
+      <button class="btn">Enroll</button>
+      <hr>
+      <p><strong>French Intermediate</strong> – Intermediate</p>
+      <button class="btn">Enroll</button>
+      <hr>
+      <p><strong>German Advanced</strong> – Advanced</p>
+      <button class="btn">Enroll</button>
+    </div>
+  </div>
+
+  <!-- Section: Enroll in a Course -->
+  <div id="enroll" class="section">
+    <h2>Enroll in a Course</h2>
+    <form id="form-enroll" method="POST" action="/enroll-course">
+      <label for="user-name">Your Name:</label>
+      <input type="text" id="user-name" name="userName" required>
+
+      <label for="course-name">Select Course:</label>
+      <select id="course-name" name="courseName" required>
+        <option value="">-- Choose a course --</option>
+        <option value="spanish">Spanish Basics</option>
+        <option value="french">French Intermediate</option>
+        <option value="german">German Advanced</option>
+      </select>
+
+      <button type="submit" class="btn">Enroll</button>
+    </form>
+  </div>
+
+  <!-- Section: View Lesson List -->
+  <div id="lessons" class="section">
+    <h2>Lesson List – Spanish Basics</h2>
+    <ul>
+      <li>Lesson 1: Introduction</li>
+      <li>Lesson 2: Greetings</li>
+      <li>Lesson 3: Grammar</li>
+      <li>Lesson 4: Numbers</li>
+      <li>Lesson 5: Practice Quiz</li>
+    </ul>
+  </div>
+
+  <!-- Section: Start Lesson -->
+  <div id="start" class="section">
+    <h2>Start Lesson</h2>
+    <p><strong>Lesson 1:</strong> Introduction to Spanish</p>
+    <p>Learn about the alphabet, pronunciation, and greetings.</p>
+    <form method="POST" action="/start-lesson">
+      <input type="hidden" name="lessonId" value="lesson1">
+      <button type="submit" class="btn">Start Lesson</button>
+    </form>
+  </div>
+
+  <!-- Section: Mark Lesson as Complete -->
+  <div id="complete" class="section">
+    <h2>Lesson Completion</h2>
+    <p>You’re almost done! Click below to mark this lesson as complete.</p>
+    <form method="POST" action="/complete-lesson">
+      <input type="hidden" name="completedLessonId" value="lesson1">
+      <button type="submit" class="btn">Mark as Complete</button>
+    </form>
+  </div>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section');
+      const buttons = document.querySelectorAll('nav button');
+      sections.forEach(sec => sec.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active-tab'));
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active-tab');
+    }
+  </script>
+
+</body>
+</html>
